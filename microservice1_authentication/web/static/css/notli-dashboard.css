@@ -1,0 +1,401 @@
+/* 
+ * NOTLI Dashboard - Premium Dark Theme with Purple Accents
+ * A sophisticated dashboard experience that complements the authentication UI
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Variables for theme colors */
+:root {
+  /* Purple accent spectrum */
+  --accent-50: #f5f3ff;
+  --accent-100: #ede9fe;
+  --accent-200: #ddd6fe;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+  --accent-800: #5b21b6;
+  --accent-900: #4c1d95;
+
+  /* Dark theme background */
+  --dark-50: #f8fafc;
+  --dark-100: #1e1e2d;
+  --dark-200: #181825;
+  --dark-300: #121220;
+  --dark-400: #0c0c18;
+  --dark-500: #050510;
+
+  /* Animations */
+  --transition-fast: 200ms;
+  --transition-medium: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  
+  /* Spacing */
+  --space-xs: clamp(0.5rem, 0.5rem + 0.5vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 0.75rem + 0.5vw, 1rem);
+  --space-md: clamp(1rem, 1rem + 1vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.5rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 2rem + 2vw, 3.5rem);
+}
+
+/* Global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--dark-200), var(--dark-300), var(--dark-400));
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  color: white;
+  line-height: 1.5;
+}
+
+/* Animated background elements */
+.fixed.inset-0 div {
+  animation: float 20s ease-in-out infinite alternate !important;
+  opacity: 0.2 !important;
+  filter: blur(100px) !important;
+}
+
+.fixed.inset-0 div:nth-child(1) {
+  background: radial-gradient(circle, var(--accent-500), var(--accent-800)) !important;
+  width: 70vw !important;
+  height: 70vw !important;
+  animation-delay: 0s !important;
+}
+
+.fixed.inset-0 div:nth-child(2) {
+  background: radial-gradient(circle, var(--accent-600), var(--accent-900)) !important;
+  width: 60vw !important;
+  height: 60vw !important;
+  animation-delay: 5s !important;
+}
+
+/* Navbar styling */
+nav.bg-dark-100 {
+  background-color: rgba(30, 30, 45, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.1) !important;
+  position: relative;
+}
+
+/* Nav links */
+nav a {
+  position: relative;
+  transition: all var(--transition-fast) ease !important;
+}
+
+nav a:hover {
+  color: var(--accent-300) !important;
+}
+
+nav a.border-accent-300 {
+  border-color: var(--accent-600) !important;
+  color: var(--accent-300) !important;
+}
+
+/* Logo styling */
+nav .bg-accent-300 {
+  background: linear-gradient(135deg, var(--accent-500), var(--accent-700)) !important;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Card Styling */
+.bg-dark-100 {
+  background-color: rgba(30, 30, 45, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0.75rem !important;
+  transition: transform var(--transition-medium) ease-out, 
+              box-shadow var(--transition-medium) ease-out !important;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d; /* Enable 3D space for children */
+}
+
+.bg-dark-100:hover {
+  transform: perspective(1000px) rotateX(1deg) rotateY(-2deg) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(124, 58, 237, 0.2) !important; /* Refined shadow */
+}
+
+/* Glow effect on cards */
+.bg-dark-100::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg, 
+    var(--accent-600), 
+    transparent 60%,
+    transparent
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity var(--transition-medium) ease;
+}
+
+.bg-dark-100:hover::before {
+  opacity: 0.8;
+  background: linear-gradient(
+    135deg, 
+    var(--accent-500), 
+    transparent 60%,
+    transparent
+  );
+}
+
+/* Card heading styling */
+.bg-dark-100 h2 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem !important;
+}
+
+.bg-dark-100 h2::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent-500), transparent);
+  border-radius: 2px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 1rem;
+}
+
+table th {
+  text-align: left;
+  padding: 1rem;
+  background-color: rgba(12, 12, 24, 0.5) !important;
+  font-weight: 600;
+  color: white;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+table th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+table th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color var(--transition-fast) ease;
+}
+
+table tr:hover td {
+  background-color: rgba(124, 58, 237, 0.1) !important; /* Increased accent */
+  color: white !important;
+  transform: scale(1.01); /* Subtle scale on row hover */
+  transition: all var(--transition-fast) ease;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Buttons styling */
+button:not(#logout-button) {
+  background: linear-gradient(135deg, var(--accent-600), var(--accent-800)) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 500 !important;
+  transition: all var(--transition-fast) ease !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3) !important;
+}
+
+button:not(#logout-button):hover {
+  transform: translateY(-3px) scale(1.03) !important; /* Enhanced lift */
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.35) !important; /* Enhanced shadow */
+}
+
+button:not(#logout-button):active {
+  transform: translateY(-1px) scale(1.01) !important; /* Click effect */
+}
+
+/* Logout button styling */
+#logout-button {
+  background: linear-gradient(135deg, #f43f5e, #d70466) !important;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3) !important;
+  transition: all var(--transition-fast) ease !important;
+}
+
+#logout-button:hover {
+  transform: translateY(-3px) scale(1.03) !important; /* Enhanced lift */
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.35) !important; /* Enhanced shadow */
+  background: linear-gradient(135deg, #fb3566, #e00c6d) !important;
+}
+
+#logout-button:active {
+  transform: translateY(-1px) scale(1.01) !important; /* Click effect */
+}
+
+/* Form inputs */
+input, textarea, select {
+  background-color: rgba(12, 12, 24, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 1rem !important;
+  transition: all var(--transition-fast) ease !important;
+  box-shadow: var(--shadow-inner) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: var(--accent-600) !important;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2) !important;
+}
+
+/* Clipboard copy animation */
+@keyframes copied {
+  0%, 100% { opacity: 0; transform: translateY(10px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+}
+
+.copied-text {
+  animation: copied 2s ease-in-out;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-600);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Icons styling */
+.fas, .far {
+  transition: transform var(--transition-fast) ease !important;
+}
+
+button:hover .fas, button:hover .far {
+  transform: translateX(2px);
+}
+
+.text-accent-200 {
+  color: var(--accent-500) !important;
+}
+
+/* Success/Error message styling */
+.border-green-500\/30 {
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.1) !important;
+}
+
+.border-red-500\/30 {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* API key box */
+.key-box {
+  background-color: rgba(12, 12, 24, 0.5) !important;
+  border: 1px dashed rgba(124, 58, 237, 0.3) !important;
+  border-radius: 0.5rem !important;
+  position: relative;
+}
+
+.key-box:hover {
+  border-color: var(--accent-400) !important;
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0% {
+    transform: translateY(0%) translateX(0%);
+  }
+  100% {
+    transform: translateY(-10%) translateX(5%);
+  }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--dark-300);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent-600), var(--accent-800));
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-500);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .max-w-6xl {
+    padding-left: var(--space-sm) !important;
+    padding-right: var(--space-sm) !important;
+  }
+  
+  table th, table td {
+    padding: 0.75rem 0.5rem !important;
+  }
+  
+  .bg-dark-100 {
+    padding: var(--space-md) !important;
+  }
+}
+
+/* Accessibility focus indicators */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-400) !important;
+  outline-offset: 2px !important;
+}

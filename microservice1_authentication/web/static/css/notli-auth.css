@@ -1,0 +1,406 @@
+/* 
+ * NOTLI Authentication - Dark Purple Theme
+ * A premium dark-themed authentication experience with purple accents
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Variables for theme colors */
+:root {
+  /* Purple accent spectrum */
+  --accent-50: #f5f3ff;
+  --accent-100: #ede9fe;
+  --accent-200: #ddd6fe;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+  --accent-800: #5b21b6;
+  --accent-900: #4c1d95;
+
+  /* Dark theme background */
+  --dark-50: #f8fafc;
+  --dark-100: #1e1e2d;
+  --dark-200: #181825;
+  --dark-300: #121220;
+  --dark-400: #0c0c18;
+  --dark-500: #050510;
+
+  /* Animations */
+  --transition-fast: 200ms;
+  --transition-medium: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  
+  /* Spacing */
+  --space-xs: clamp(0.5rem, 0.5rem + 0.5vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 0.75rem + 0.5vw, 1rem);
+  --space-md: clamp(1rem, 1rem + 1vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.5rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 2rem + 2vw, 3.5rem);
+}
+
+/* Global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--dark-200), var(--dark-300), var(--dark-400));
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background elements */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  filter: blur(80px);
+  z-index: 0;
+  animation: pulse-glow 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+body::before {
+  background: radial-gradient(circle, var(--accent-500), var(--accent-700));
+  width: 60vw;
+  height: 60vw;
+  top: -20vw;
+  right: -10vw;
+}
+
+body::after {
+  background: radial-gradient(circle, var(--accent-600), var(--accent-900));
+  width: 50vw;
+  height: 50vw;
+  bottom: -10vw;
+  left: -10vw;
+  animation-delay: 2s;
+}
+
+/* Brand tagline panel - Desktop only */
+@media (min-width: 1024px) {
+  body::after {
+    content: "NOTLI – Your Note-taking Companion";
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(93, 33, 182, 0.05), rgba(139, 92, 246, 0.08));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    line-height: 1.2;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: -0.02em;
+    padding: var(--space-lg);
+    z-index: 1;
+    animation: fade-in 1s ease-out;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Form card styling */
+.bg-dark-100 {
+  background-color: rgba(30, 30, 45, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  transition: transform var(--transition-medium) ease-out, 
+              box-shadow var(--transition-medium) ease-out !important;
+  padding: clamp(1.5rem, 5vw, 2.5rem) !important;
+  max-width: 440px !important;
+  width: 100% !important;
+  margin: 1rem;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d; /* Enable 3D space for children */
+}
+
+.bg-dark-100:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-3deg) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.3) !important; /* Enhanced shadow */
+}
+
+/* Gradient border effect on card */
+.bg-dark-100::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg, 
+    var(--accent-400), 
+    var(--accent-700), 
+    rgba(255, 255, 255, 0.1)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hover effect for form card */
+.bg-dark-100:hover {
+  transform: translateY(-5px) scale(1.01) !important;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Logo/Brand styling */
+.bg-accent-300 {
+  background: linear-gradient(135deg, var(--accent-500), var(--accent-700)) !important;
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.4);
+  animation: pulse-subtle 3s infinite alternate;
+}
+
+/* Form elements styling */
+form input {
+  background-color: rgba(12, 12, 24, 0.7) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.5rem !important;
+  transition: all var(--transition-fast) ease !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+form input:focus {
+  outline: none !important;
+  border-color: var(--accent-500) !important; /* Slightly lighter accent */
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3), /* More pronounced glow */
+              inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-1px); /* Slight lift */
+}
+
+form input::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Label animations */
+form label {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: transform var(--transition-fast) ease, 
+              color var(--transition-fast) ease !important;
+}
+
+form input:focus + label,
+form input:not(:placeholder-shown) + label {
+  color: var(--accent-300) !important;
+  transform: translateY(-4px);
+}
+
+/* Buttons styling */
+form button[type="submit"] {
+  background: linear-gradient(135deg, var(--accent-600), var(--accent-800)) !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: all var(--transition-fast) ease !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.5),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+form button[type="submit"]:hover {
+  transform: translateY(-3px) scale(1.03); /* More pronounced lift */
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4), /* Enhanced shadow */
+              inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+form button[type="submit"]:active {
+  transform: translateY(-1px) scale(1.01); /* Click effect */
+}
+
+/* Button hover effect - moving highlight */
+form button[type="submit"]::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    transparent, 
+    transparent, 
+    rgba(255, 255, 255, 0.1), 
+    transparent, 
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 0.5s ease;
+}
+
+form button[type="submit"]:hover::after {
+  transform: rotate(30deg) translate(20%, 0);
+}
+
+/* Focus styles for accessibility */
+form input:focus-visible,
+form button:focus-visible {
+  outline: 2px solid var(--accent-300) !important;
+  outline-offset: 2px !important;
+}
+
+/* Error message styling */
+#error-message {
+  color: #ff6b6b !important;
+  font-size: 0.875rem !important;
+  margin-top: 0.5rem !important;
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Switch to alternate page links */
+.mt-6 a, .mt-8 a {
+  color: var(--accent-300) !important;
+  text-decoration: none !important;
+  position: relative;
+  font-weight: 500;
+  transition: all var(--transition-fast) ease;
+}
+
+.mt-6 a:hover, .mt-8 a:hover {
+  color: var(--accent-200) !important;
+  text-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+}
+
+.mt-6 a::after, .mt-8 a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-400), var(--accent-600));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast) ease;
+}
+
+.mt-6 a:hover::after, .mt-8 a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Icon styling */
+.fas, .far {
+  color: var(--accent-400) !important;
+  transition: color var(--transition-fast) ease, 
+              transform var(--transition-fast) ease !important;
+}
+
+form input:focus + label .fas,
+form input:focus + label .far,
+form input:not(:placeholder-shown) + label .fas,
+form input:not(:placeholder-shown) + label .far {
+  color: var(--accent-300) !important;
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-subtle {
+  0% {
+    box-shadow: 0 0 15px rgba(109, 40, 217, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(109, 40, 217, 0.5);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .bg-dark-100 {
+    padding: var(--space-md) !important;
+  }
+  
+  form {
+    gap: var(--space-sm) !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-300: #c4b5fd;
+    --accent-400: #a78bfa;
+    --accent-500: #8b5cf6;
+    --accent-600: #7c3aed;
+    --accent-700: #6d28d9;
+  }
+}
+
+/* Fallback for browsers that don't support gradients */
+@supports not (background: linear-gradient(135deg, var(--accent-500), var(--accent-700))) {
+  form button[type="submit"],
+  .bg-accent-300 {
+    background-color: var(--accent-600) !important;
+  }
+  
+  body {
+    background-color: var(--dark-300);
+  }
+  
+  .bg-dark-100::before {
+    border: 1px solid var(--accent-600);
+  }
+}

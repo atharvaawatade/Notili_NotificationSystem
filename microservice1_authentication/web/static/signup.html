@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - NOTLI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            '50': '#f8fafc',
+                            '100': '#1e1e2d',
+                            '200': '#181825',
+                            '300': '#121220',
+                            '400': '#0c0c18',
+                            '500': '#050510',
+                        },
+                        accent: {
+                            '100': '#93c5fd',
+                            '200': '#3b82f6',
+                            '300': '#2563eb',
+                            '400': '#1d4ed8',
+                            '500': '#1e40af',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- Optional custom styles -->
+    <link rel="stylesheet" href="/static/css/notli-auth.css"> <!-- Premium dark theme -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark-200 to-dark-300 flex items-center justify-center min-h-screen p-4">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-accent-300/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute -bottom-40 -right-20 w-80 h-80 bg-accent-400/5 rounded-full blur-3xl animate-pulse-slow"></div>
+    </div>
+    
+    <div class="w-full max-w-md relative z-10" style="perspective: 1500px;"> 
+        <div class="bg-dark-100 p-8 rounded-xl shadow-2xl w-full border border-dark-50/10 backdrop-blur-md transform translateZ-0">
+            <!-- Logo/Brand -->
+            <div class="flex justify-center mb-8">
+                <div class="flex items-center">
+                    <div class="bg-accent-300 rounded-full p-2 mr-2">
+                        <i class="fas fa-user-plus text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-white">NOTLI</h1>
+                </div>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-8 text-center text-white/90">Create Your Account</h2>
+            
+            <form id="signup-form" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-gray-300 text-sm font-medium mb-2">
+                        <i class="far fa-envelope mr-2 text-accent-200"></i>Email Address
+                    </label>
+                    <input type="email" id="email" name="email" required
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200"
+                           placeholder="you@example.com">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-gray-300 text-sm font-medium mb-2">
+                        <i class="fas fa-lock mr-2 text-accent-200"></i>Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" required minlength="8"
+                               class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200"
+                               placeholder="********">
+                    </div>
+                    <p class="text-gray-400 text-xs mt-2"><i class="fas fa-info-circle mr-1"></i>Minimum 8 characters</p>
+                </div>
+                
+                <div>
+                    <p id="error-message" class="text-red-400 text-sm font-medium mt-1 empty:hidden"></p>
+                </div>
+                
+                <div>
+                    <button type="submit"
+                            class="bg-gradient-to-r from-accent-300 to-accent-400 hover:from-accent-400 hover:to-accent-500 text-white font-semibold py-3 px-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-300 focus:ring-offset-dark-100 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-user-plus mr-2"></i>Create Account
+                    </button>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <a href="/static/login.html" class="inline-block font-medium text-sm text-accent-100 hover:text-white transition duration-200">
+                        Already have an account? <span class="underline">Log In</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>
