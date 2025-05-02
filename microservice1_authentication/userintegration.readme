@@ -1,0 +1,213 @@
+# NOTLI API Integration Guide
+
+Welcome to the NOTLI API Integration Guide! This document explains how to use your NOTLI-generated API key to immediately start sending notifications through our platform. Simply replace the example API key with yours and you're ready to go!
+
+---
+
+## 1. API Key Authentication
+
+Your **API key** is the secret token that authenticates your requests to NOTLI. It's available in your dashboard after creating an account.
+
+**Authentication Header Format:**
+
+For most direct API calls, use:
+```
+X-API-Key: YOUR_API_KEY_HERE
+```
+
+For gateway or proxy-based endpoints, use:
+```
+Authorization: ApiKey YOUR_API_KEY_HERE
+```
+
+---
+
+## 2. Available Endpoints
+
+### Email Notification API
+```
+POST http://localhost:3001/v1/email/notify
+```
+
+**Request Headers:**
+```
+Content-Type: application/json
+X-API-Key: YOUR_API_KEY_HERE
+```
+
+**Request Body:**
+```json
+{
+  "recipient": "user@example.com",
+  "subject": "Your Subject Line",
+  "body": "Your email content here. Can include HTML.",
+  "from_name": "Your Company",
+  "from_email": "notifications@yourcompany.com",
+  "idempotency_key": "unique-uuid-here"
+}
+```
+
+**Successful Response (200 OK):**
+```json
+{
+  "message_id": "msg_123456abcdef",
+  "status": "queued"
+}
+```
+
+---
+
+## 3. Ready-to-Use Go Example
+
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	// Replace with your actual API key
+	apiKey := "nsk_12345abcdef6789"
+
+	// Prepare email request body
+	emailRequest := map[string]string{
+		"recipient":       "recipient@example.com",
+		"subject":        "Hello from NOTLI API",
+		"body":           "<h1>Hello!</h1><p>This is a test email from the NOTLI API.</p>",
+		"from_name":      "Your Application",
+		"from_email":     "notifications@yourdomain.com",
+		"idempotency_key": "12345678-abcd-4321-efgh-987654321xyz",
+	}
+
+	// Convert to JSON
+	jsonData, err := json.Marshal(emailRequest)
+	if err != nil {
+		fmt.Printf("Error creating JSON: %v\n", err)
+		return
+	}
+
+	// Create HTTP request
+	req, err := http.NewRequest(
+		"POST",
+		"http://localhost:3001/v1/email/notify", 
+		bytes.NewBuffer(jsonData),
+	)
+	if err != nil {
+		fmt.Printf("Error creating request: %v\n", err)
+		return
+	}
+
+	// Set headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-API-Key", apiKey)
+
+	// Send request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Printf("Error sending request: %v\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read and print response
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Printf("Status: %d\n", resp.StatusCode)
+	fmt.Printf("Response: %s\n", string(body))
+}
+```
+
+---
+
+## 4. Ready-to-Use Python Example
+
+```python
+import requests
+import uuid
+
+# Replace with your actual API key
+api_key = "nsk_12345abcdef6789"
+
+# Prepare the request
+url = "http://localhost:3001/v1/email/notify"
+
+headers = {
+    "Content-Type": "application/json",
+    "X-API-Key": api_key
+}
+
+# Create payload with required fields
+payload = {
+    "recipient": "user@example.com",
+    "subject": "Test from Python",
+    "body": "<h1>Hello from Python!</h1><p>This is a test notification sent via Python.</p>",
+    "from_name": "My Application",
+    "from_email": "notifications@mydomain.com",
+    "idempotency_key": str(uuid.uuid4())  # Generate a unique key
+}
+
+# Send the request
+response = requests.post(url, json=payload, headers=headers)
+
+# Check the response
+print(f"Status Code: {response.status_code}")
+print(f"Response: {response.json()}")
+```
+
+---
+
+## 5. Advanced Parameters
+
+### Email API Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `recipient` | Yes | Email address of the recipient |
+| `subject` | Yes | Subject line of the email |
+| `body` | Yes | Email content (can include HTML) |
+| `from_name` | No | Name to display as the sender |
+| `from_email` | No | Email address to use as sender (must be verified) |
+| `idempotency_key` | Yes | Unique identifier to prevent duplicate sends |
+| `template_id` | No | ID of a template to use (if you want to use a template) |
+| `template_data` | No | JSON object with data to populate in the template |
+
+---
+
+## 6. Best Practices & Security
+
+- **Never expose your API key** in client-side code or public repositories
+- Generate a new key immediately if you suspect your current key is compromised
+- Create separate API keys for different applications or environments
+- Set up IP restrictions for your API keys when possible
+- Implement retry logic with exponential backoff for failed requests
+- Always use HTTPS in production environments
+- Track your message_id values to query delivery status
+
+---
+
+## 7. Troubleshooting
+
+### Common Error Codes
+
+| Status Code | Meaning | Solution |
+|-------------|---------|----------|
+| 400 | Bad Request | Check your request parameters |
+| 401 | Unauthorized | Verify your API key is correct and active |
+| 422 | Validation Error | Check the required fields in your request |
+| 429 | Rate Limit Exceeded | Implement backoff and retry strategy |
+| 500 | Server Error | Contact NOTLI support |
+
+---
+
+## 8. Need Help?
+
+For questions or issues, contact the NOTLI team at [support@notli.app] or visit our documentation at [docs.notli.app].
+
+---
+
+Happy building with NOTLI!

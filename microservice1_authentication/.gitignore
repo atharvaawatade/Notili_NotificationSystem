@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Compiled binaries
+*.exe
+auth_server
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# Go build cache
+/vendor/
+*.log
+
+# Ignore GoLand files
+.idea_modules/
+*.iml

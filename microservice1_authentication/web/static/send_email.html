@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email - NOTLI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            '50': '#f8fafc',
+                            '100': '#1e1e2d',
+                            '200': '#181825',
+                            '300': '#121220',
+                            '400': '#0c0c18',
+                            '500': '#050510',
+                        },
+                        accent: {
+                            '100': '#93c5fd',
+                            '200': '#3b82f6',
+                            '300': '#2563eb',
+                            '400': '#1d4ed8',
+                            '500': '#1e40af',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/notli-email.css"> <!-- Premium dark theme -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e2d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark-200 to-dark-300 min-h-screen text-gray-200">
+    <!-- Background elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-0 -right-20 w-64 h-64 bg-accent-300/5 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-0 -left-20 w-80 h-80 bg-accent-400/5 rounded-full blur-3xl animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-dark-100 shadow-xl border-b border-dark-300/50 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-4">
+                    <div>
+                        <a href="/static/dashboard.html" class="flex items-center py-5 px-2 text-gray-100 hover:text-white">
+                            <div class="bg-accent-300 rounded-full p-1.5 mr-2 flex items-center justify-center">
+                                <i class="fas fa-envelope-open-text text-white text-sm"></i>
+                            </div>
+                            <span class="font-bold text-lg">NOTLI</span>
+                        </a>
+                    </div>
+                    <!-- Navigation Links -->
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="/static/dashboard.html" class="py-5 px-3 text-gray-300 hover:text-white hover:text-accent-100 transition duration-200">Dashboard</a>
+                        <a href="/static/send_email.html" class="py-5 px-3 text-accent-100 border-b-2 border-accent-300 font-semibold">Send Email</a>
+                    </div>
+                </div>
+                <!-- Right Navbar -->
+                <div class="flex items-center space-x-4">
+                    <span id="user-email" class="py-5 px-3 text-gray-300 text-sm"></span>
+                    <button id="logout-button" class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-200">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-8" style="perspective: 1800px;">
+        <h1 class="text-3xl font-bold text-white mb-8 flex items-center">
+            <i class="fas fa-paper-plane mr-3 text-accent-200"></i>Send Test Email
+        </h1>
+
+        <!-- API Key Section -->
+        <div class="bg-dark-100 p-6 rounded-xl shadow-xl mb-8 border border-dark-50/10 backdrop-blur-sm">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                <i class="fas fa-key mr-2 text-accent-200"></i>API Key
+            </h2>
+            
+            <!-- API Key Option Tabs -->
+            <div class="border-b border-dark-300 mb-6">
+                <ul class="flex flex-wrap -mb-px" id="apiKeyTabs" role="tablist">
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-accent-300 rounded-t-lg text-accent-100" 
+                                id="select-tab" 
+                                data-tabs-target="#select-content" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="select-content" 
+                                aria-selected="true">
+                                <i class="fas fa-list-ul mr-2"></i>Select from Keys
+                        </button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-100 text-gray-400" 
+                                id="manual-tab" 
+                                data-tabs-target="#manual-content" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="manual-content" 
+                                aria-selected="false">
+                                <i class="fas fa-keyboard mr-2"></i>Enter Manually
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Tab Content -->
+            <div>
+                <!-- Select from Keys Tab -->
+                <div class="mb-4" id="select-content" role="tabpanel" aria-labelledby="select-tab">
+                    <label for="api-key-select" class="block text-sm font-medium text-gray-300 mb-2">
+                        <i class="fas fa-tag mr-2 text-accent-200"></i>Choose API Key
+                    </label>
+                    <select id="api-key-select" class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">
+                        <option value="" selected disabled>Select an API key</option>
+                        <!-- API Keys will be populated here -->
+                    </select>
+                </div>
+                
+                <!-- Manual Entry Tab -->
+                <div class="mb-4 hidden" id="manual-content" role="tabpanel" aria-labelledby="manual-tab">
+                    <label for="manual-api-key" class="block text-sm font-medium text-gray-300 mb-2">
+                        <i class="fas fa-key mr-2 text-accent-200"></i>Enter API Key
+                    </label>
+                    <input type="text" id="manual-api-key" 
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200" 
+                           placeholder="Paste your API key here">
+                </div>
+                
+                <p id="api-key-error" class="text-red-400 text-sm font-medium mt-2"></p>
+            </div>
+        </div>
+
+        <!-- Email Form Section -->
+        <div class="bg-dark-100 p-6 rounded-xl shadow-xl mb-8 border border-dark-50/10 backdrop-blur-sm">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                <i class="fas fa-envelope mr-2 text-accent-200"></i>Email Details
+            </h2>
+            <form id="email-form" class="space-y-6">
+                <div>
+                    <label for="sender-email" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                        <i class="fas fa-at mr-2 text-accent-200"></i>Sender Email 
+                        <span class="ml-2 text-accent-100 font-medium text-xs bg-dark-300/50 px-2 py-0.5 rounded">(Must use @simplivu.com domain)</span>
+                    </label>
+                    <input type="email" id="sender-email" name="sender-email" value="simplivu@simplivu.com" placeholder="your.name@simplivu.com" 
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">
+                    <p class="text-xs text-gray-400 mt-2"><i class="fas fa-info-circle mr-1"></i>The email must end with @simplivu.com or the system will use the default simplivu@simplivu.com sender.</p>
+                </div>
+                <div>
+                    <label for="recipient" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                        <i class="fas fa-user mr-2 text-accent-200"></i>Recipient Email
+                    </label>
+                    <input type="email" id="recipient" name="recipient" value="atharvaawatade@gmail.com" required
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                        <i class="fas fa-heading mr-2 text-accent-200"></i>Subject
+                    </label>
+                    <input type="text" id="subject" name="subject" value="NOTLI Test Email" required
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <label for="body" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                        <i class="fas fa-pen mr-2 text-accent-200"></i>Message
+                    </label>
+                    <textarea id="body" name="body" rows="4" required
+                              class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">hii test</textarea>
+                </div>
+                <div>
+                    <label for="from-name" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                        <i class="fas fa-user-tag mr-2 text-accent-200"></i>From Name (Optional)
+                    </label>
+                    <input type="text" id="from-name" name="from-name" value="NOTLI Test"
+                           class="bg-dark-200 border-0 shadow-inner shadow-dark-300 rounded-lg w-full py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <button type="submit" id="send-email-button" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transform hover:scale-105 transition duration-300 flex items-center justify-center">
+                        <span class="button-text">Send Email</span>
+                        <!-- Spinner will be added here by JS -->
+                    </button>
+                </div>
+            </form>
+            <p id="send-email-error" class="text-red-400 text-sm font-medium mt-3"></p>
+            <div id="send-email-success" class="mt-6 p-5 bg-dark-300/50 border border-green-500/30 text-white rounded-lg relative hidden">
+                <div class="flex items-start">
+                    <i class="fas fa-check-circle text-green-400 mr-3 text-xl mt-0.5"></i>
+                    <div>
+                        <strong class="font-bold text-white">Email Sent Successfully!</strong>
+                        <p class="text-gray-300 mt-1">Your email has been queued for delivery.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Rate Limit Meter Placeholder -->
+            <div class="mt-4">
+                <p class="text-sm text-gray-400 mb-1">API Usage (Example):</p>
+                <div class="rate-limit-meter">
+                    <div class="rate-limit-meter-bar" id="rate-limit-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Log Section -->
+        <div class="bg-dark-100 p-6 rounded-xl shadow-xl border border-dark-50/10 backdrop-blur-sm">
+            <h2 class="text-xl font-semibold text-white mb-6 flex items-center">
+                <i class="fas fa-terminal mr-2 text-accent-200"></i>Delivery Logs
+            </h2>
+            <div id="log-container" class="bg-dark-400 text-green-400 font-mono text-sm p-4 rounded-lg h-80 overflow-y-auto border border-dark-300">
+                <div class="mb-1"><i class="fas fa-chevron-right mr-2"></i>--- Logs will appear here when you send an email ---</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/static/js/api_key_poller.js"></script>
+    <script src="/static/js/send_email.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Debug</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .debug-card {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Authentication Debug</h1>
+            
+            <div class="button-group">
+                <button id="test-signup" class="btn">Test Signup</button>
+                <button id="test-login" class="btn">Test Login</button>
+                <button id="clear-log" class="btn">Clear Log</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">Test Email</label>
+                <input type="email" id="email" value="test@example.com">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Test Password</label>
+                <input type="password" id="password" value="password123">
+            </div>
+            
+            <div class="debug-card" id="log-output"></div>
+        </div>
+    </div>
+    
+    <script>
+        const logOutput = document.getElementById('log-output');
+        const testSignupBtn = document.getElementById('test-signup');
+        const testLoginBtn = document.getElementById('test-login');
+        const clearLogBtn = document.getElementById('clear-log');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        
+        // Custom log function that outputs to our debug card
+        function debugLog(message, data = null) {
+            const timestamp = new Date().toISOString();
+            let logMessage = `[${timestamp}] ${message}`;
+            
+            if (data) {
+                if (typeof data === 'object') {
+                    logMessage += '\n' + JSON.stringify(data, null, 2);
+                } else {
+                    logMessage += ' ' + data;
+                }
+            }
+            
+            logOutput.innerHTML += logMessage + '\n\n';
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+        
+        // Test signup
+        testSignupBtn.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            debugLog(`Testing signup with: ${email}`);
+            
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                debugLog(`Signup response status: ${response.status}`);
+                
+                const data = await response.json();
+                debugLog('Response data:', data);
+                
+                if (data.token) {
+                    debugLog(`✅ SUCCESS: Token received: ${data.token.substring(0, 8)}...`);
+                } else {
+                    debugLog('❌ ERROR: No token in response');
+                }
+            } catch (error) {
+                debugLog(`❌ ERROR: ${error.message}`);
+            }
+        });
+        
+        // Test login
+        testLoginBtn.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            debugLog(`Testing login with: ${email}`);
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                debugLog(`Login response status: ${response.status}`);
+                
+                const data = await response.json();
+                debugLog('Response data:', data);
+                
+                if (data.token) {
+                    debugLog(`✅ SUCCESS: Token received: ${data.token.substring(0, 8)}...`);
+                } else {
+                    debugLog('❌ ERROR: No token in response');
+                }
+            } catch (error) {
+                debugLog(`❌ ERROR: ${error.message}`);
+            }
+        });
+        
+        // Clear log
+        clearLogBtn.addEventListener('click', () => {
+            logOutput.innerHTML = '';
+        });
+        
+        // Initial log
+        debugLog('Debug tool ready. Click a button to test authentication endpoints.');
+    </script>
+</body>
+</html>

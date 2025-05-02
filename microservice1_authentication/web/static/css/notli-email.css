@@ -1,0 +1,433 @@
+/* 
+ * NOTLI Email - Premium Dark Theme with Purple Accents
+ * A sophisticated email composer experience that complements the dashboard UI
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Variables for theme colors */
+:root {
+  /* Purple accent spectrum */
+  --accent-50: #f5f3ff;
+  --accent-100: #ede9fe;
+  --accent-200: #ddd6fe;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+  --accent-800: #5b21b6;
+  --accent-900: #4c1d95;
+
+  /* Dark theme background */
+  --dark-50: #f8fafc;
+  --dark-100: #1e1e2d;
+  --dark-200: #181825;
+  --dark-300: #121220;
+  --dark-400: #0c0c18;
+  --dark-500: #050510;
+
+  /* Animations */
+  --transition-fast: 200ms;
+  --transition-medium: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  
+  /* Spacing */
+  --space-xs: clamp(0.5rem, 0.5rem + 0.5vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 0.75rem + 0.5vw, 1rem);
+  --space-md: clamp(1rem, 1rem + 1vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.5rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 2rem + 2vw, 3.5rem);
+}
+
+/* Global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--dark-200), var(--dark-300), var(--dark-400));
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  color: white;
+  line-height: 1.5;
+}
+
+/* Animated background elements */
+.fixed.inset-0 div {
+  animation: float 20s ease-in-out infinite alternate !important;
+  opacity: 0.2 !important;
+  filter: blur(100px) !important;
+}
+
+.fixed.inset-0 div:nth-child(1) {
+  background: radial-gradient(circle, var(--accent-500), var(--accent-800)) !important;
+  width: 70vw !important;
+  height: 70vw !important;
+  animation-delay: 0s !important;
+}
+
+.fixed.inset-0 div:nth-child(2) {
+  background: radial-gradient(circle, var(--accent-600), var(--accent-900)) !important;
+  width: 60vw !important;
+  height: 60vw !important;
+  animation-delay: 5s !important;
+}
+
+/* Navbar styling */
+nav.bg-dark-100 {
+  background-color: rgba(30, 30, 45, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.1) !important;
+  position: relative;
+}
+
+/* Nav links */
+nav a {
+  position: relative;
+  transition: all var(--transition-fast) ease !important;
+}
+
+nav a:hover {
+  color: var(--accent-300) !important;
+}
+
+nav a.border-accent-300 {
+  border-color: var(--accent-600) !important;
+  color: var(--accent-300) !important;
+}
+
+/* Logo styling */
+nav .bg-accent-300 {
+  background: linear-gradient(135deg, var(--accent-500), var(--accent-700)) !important;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Card Styling */
+.bg-dark-100 {
+  background-color: rgba(30, 30, 45, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0.75rem !important;
+  transition: transform var(--transition-medium) ease-out, 
+              box-shadow var(--transition-medium) ease-out !important;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d; /* Enable 3D space for children */
+}
+
+.bg-dark-100:hover {
+  transform: perspective(1000px) rotateX(1deg) rotateY(-2deg) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 10px rgba(124, 58, 237, 0.2) !important; /* Refined shadow */
+}
+
+/* Glow effect on cards */
+.bg-dark-100::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg, 
+    var(--accent-600), 
+    transparent 60%,
+    transparent
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity var(--transition-medium) ease;
+}
+
+.bg-dark-100:hover::before {
+  opacity: 0.8;
+  background: linear-gradient(
+    135deg, 
+    var(--accent-500), 
+    transparent 60%,
+    transparent
+  );
+}
+
+/* Card heading styling */
+.bg-dark-100 h2 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem !important;
+}
+
+.bg-dark-100 h2::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent-500), transparent);
+  border-radius: 2px;
+}
+
+/* Form inputs */
+input, textarea, select {
+  background-color: rgba(12, 12, 24, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 1rem !important;
+  transition: all var(--transition-fast) ease !important;
+  box-shadow: var(--shadow-inner) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: var(--accent-500) !important; /* Slightly lighter accent */
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3), /* More pronounced glow */
+              inset 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-1px) scale(1.01); /* Slight lift and scale */
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Email compose form specific */
+textarea#message {
+  min-height: 200px !important;
+  resize: vertical !important;
+  line-height: 1.5 !important;
+  background-color: rgba(12, 12, 24, 0.7) !important;
+}
+
+/* Add a subtle visual indicator for character count */
+.relative .absolute {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.75rem !important;
+  transition: color var(--transition-fast) ease !important;
+}
+
+.relative .absolute.text-red-500 {
+  color: #f87171 !important;
+  font-weight: 600 !important;
+  animation: pulse 1s infinite;
+}
+
+/* Label styling */
+label {
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Primary action button */
+#send-button {
+  background: linear-gradient(135deg, var(--accent-600), var(--accent-800)) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  transition: all var(--transition-fast) ease !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+#send-button:hover {
+  transform: translateY(-3px) scale(1.03) !important; /* Enhanced lift */
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.35),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2) !important; /* Enhanced shadow */
+}
+
+#send-button:active {
+  transform: translateY(-1px) scale(1.01) !important; /* Click effect */
+}
+
+/* Add a moving gradient highlight */
+#send-button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    transparent, 
+    transparent, 
+    rgba(255, 255, 255, 0.1), 
+    transparent, 
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 0.5s ease;
+}
+
+#send-button:hover::after {
+  transform: rotate(30deg) translate(20%, 0);
+}
+
+/* Logout button styling */
+#logout-button {
+  background: linear-gradient(135deg, #f43f5e, #d70466) !important;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3) !important;
+  transition: all var(--transition-fast) ease !important;
+}
+
+#logout-button:hover {
+  transform: translateY(-3px) scale(1.03) !important; /* Enhanced lift */
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.35) !important; /* Enhanced shadow */
+  background: linear-gradient(135deg, #fb3566, #e00c6d) !important;
+}
+
+#logout-button:active {
+  transform: translateY(-1px) scale(1.01) !important; /* Click effect */
+}
+
+/* Success/Error message styling */
+#send-email-success {
+  background-color: rgba(6, 78, 59, 0.2) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  margin-top: 1.5rem !important;
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.1) !important;
+  animation: slideDown var(--transition-medium) ease;
+}
+
+#send-email-error {
+  background-color: rgba(153, 27, 27, 0.2) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  margin-top: 1.5rem !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.1) !important;
+  animation: slideDown var(--transition-medium) ease;
+}
+
+/* Live Log Section */
+#log-content {
+  background-color: rgba(12, 12, 24, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+  font-family: 'Courier New', monospace !important;
+  line-height: 1.5 !important;
+}
+
+#log-content .text-green-400 {
+  color: #34d399 !important;
+}
+
+#log-content .text-red-400 {
+  color: #f87171 !important;
+}
+
+#log-content .text-yellow-400 {
+  color: #fbbf24 !important;
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0% {
+    transform: translateY(0%) translateX(0%);
+  }
+  100% {
+    transform: translateY(-10%) translateX(5%);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Icons styling */
+.fas, .far {
+  color: var(--accent-500) !important;
+  transition: transform var(--transition-fast) ease !important;
+}
+
+button:hover .fas, button:hover .far {
+  transform: translateX(2px);
+}
+
+.text-accent-200 {
+  color: var(--accent-500) !important;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--dark-300);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent-600), var(--accent-800));
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-500);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .max-w-6xl {
+    padding-left: var(--space-sm) !important;
+    padding-right: var(--space-sm) !important;
+  }
+  
+  .bg-dark-100 {
+    padding: var(--space-md) !important;
+  }
+  
+  textarea#message {
+    min-height: 150px !important;
+  }
+}
+
+/* Accessibility focus indicators */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-400) !important;
+  outline-offset: 2px !important;
+}
